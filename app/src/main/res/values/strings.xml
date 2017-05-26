@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">myCircle</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="forgot_password_link"><u>Forgot Password</u></string>
+    <string name="facebook_app_id">243420442805480</string>
+    <string name="fb_login_protocol_scheme">fb243420442805480</string>
+    <string name="auth_failed">Registration Failed</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="email_unverified">Please Verify Your Email</string>
+    <string name="email_failed">Unable to send verification email. Please check your connection and try again.</string>
+    <string name="verification_email_sent">Verification Email sent. Please check your email.</string>
+    <string name="reset_password_email_sent">Password reset email sent. Please check your email.</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_discovery">Discovery</string>
+    <string name="action_create_group">Create Group</string>
+    <string name="action_settings">Settings</string>
+</resources>
