@@ -11,16 +11,18 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.adc.mycircle.items.EventContent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventFragment.OnListFragmentInteractionListener {
 
     private FirebaseUser user;
     private FrameLayout fragmentContainer;
     private EventFragment eventFragment;
 
+    //TODO: Add the rest of the fragments
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         } else {
             // User is signed in
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, eventFragment).commit();
         }
     }
 
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(false);
 
         fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
-        eventFragment = new EventFragment();
+        eventFragment = EventFragment.newInstance(0);
     }
 
     @Override
@@ -98,4 +101,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //TODO: go to event page when event is clicked
+    @Override
+    public void onListFragmentInteraction(EventContent.Event item) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, eventFragment).commit();
+    }
 }
