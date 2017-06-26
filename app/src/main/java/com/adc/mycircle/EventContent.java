@@ -1,4 +1,4 @@
-package com.adc.mycircle.items;
+package com.adc.mycircle;
 
 import android.graphics.Color;
 import android.media.Image;

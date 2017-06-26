@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String email;
     private String firstName;
     private String lastName;
+    private String databaseURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         confirmEmailField = (EditText) findViewById(R.id.confirmEmailField);
         passwordField = (EditText) findViewById(R.id.passwordField);
         confirmPasswordField = (EditText) findViewById(R.id.confirmPasswordField);
+        databaseURL = "http://getmycircle.com";
 
         TAG = "Register Activity";
 
@@ -65,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                     createAccount(emailField.getText().toString(), passwordField.getText().toString());
             }
         });
-
+        // TODO: Edit the post try catch block
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -77,9 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
                     lastName = ((TextView) findViewById(R.id.lastName)).getText().toString();
                     // Attempt to create JSONObject to send to the database
                     try { // If successful send the JSONObject to our database and send the verification email
-                        JSONObject userObject = new JSONObject(buildUserObject());
+                        UserData.SetUserData(username, null, firstName, lastName, email);
+                        String userObject = UserData.buildUserObject();
+                        CrudHelper crudHelper = new CrudHelper();
+                        String response = crudHelper.POST(databaseURL, userObject);
                         sendVerificationEmail ();
-                    } catch (JSONException e) { // If we fail to create the object inform the user and delete the user from firebase
+                    } catch (Exception e) { // If we fail to create the object inform the user and delete the user from firebase
                         Toast.makeText(RegisterActivity.this, "Failed to get user data, please try again", Toast.LENGTH_LONG).show();
                         user.delete();
                         e.printStackTrace();
@@ -160,29 +165,6 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private String buildUserObject () {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("{ ");
-        stringBuilder.append("username:");
-        stringBuilder.append(username);
-        stringBuilder.append(", ");
-        stringBuilder.append("photoUrl:");
-        stringBuilder.append(" ");
-        stringBuilder.append(", ");
-        stringBuilder.append("firstname:");
-        stringBuilder.append(firstName);
-        stringBuilder.append(", ");
-        stringBuilder.append("lastname:");
-        stringBuilder.append(lastName);
-        stringBuilder.append(", ");
-        stringBuilder.append("email:");
-        stringBuilder.append(email);
-        stringBuilder.append(" }");
-
-        return stringBuilder.toString();
-    }
-
     //TODO: Validate fields better
     private boolean validateFields() {
         username = usernameField.getText().toString();
@@ -199,15 +181,5 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         } else
             return true;
-    }
-
-    public class UploadUserDataTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... objects) {
-
-
-            return null;
-        }
     }
 }

@@ -30,6 +30,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+
 public class LoginActivity extends AppCompatActivity {
 
     private String TAG;
@@ -153,8 +155,17 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    //TODO: Finish parsing through the JSON and set the UserData object with that JSON
     private void checkEmailVerification () {
         if (user.isEmailVerified()) {
+            String url = "http://mycircle.com/" + emailField.getText().toString();
+            CrudHelper crudHelper = new CrudHelper();
+            try {
+                String userData = crudHelper.GET (url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            UserData.SetUserData(null, null, null, null, emailField.getText().toString());
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         } else {
