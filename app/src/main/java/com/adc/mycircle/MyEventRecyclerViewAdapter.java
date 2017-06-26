@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.adc.mycircle.EventFragment.OnListFragmentInteractionListener;
+import com.adc.mycircle.items.EventContent;
 import com.adc.mycircle.items.EventContent.Event;
 
 import java.util.List;
